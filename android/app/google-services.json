@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "867191951234",
+    "project_id": "heresy-unbound",
+    "storage_bucket": "heresy-unbound.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867191951234:android:6c775d5b830e175003c99b",
+        "android_client_info": {
+          "package_name": "com.example.fansite_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmOjK1PgXjppZt_x0QbDpT2v8PGQQv168"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

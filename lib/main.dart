@@ -5,12 +5,9 @@ import 'pages/mission_builder_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'pages/house_rules_page.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(HeresyUnbound());
 }
 
@@ -73,7 +70,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(280),
+        preferredSize: Size.fromHeight(230),
         child: Container(
           color: Colors.black,
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -81,52 +78,63 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // HEADER ROW WITH CENTERED BANNER
-              Stack(
-                alignment: Alignment.center,
+              Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // LEFT: Logo
-                      Image.asset('assets/HUColorsTRANSBGPNG.png', height: 150),
-                      Spacer(),
-                      // RIGHT: App Promo as vertical block
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Home of the Heresy Challenges App',
-                            style: TextStyle(fontSize: 16, color: Colors.white70),
-                          ),
-                          SizedBox(height: 6),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Image.asset('assets/HCIcon512PNG.png', height: 40),
-                              SizedBox(width: 12),
-                              GestureDetector(
-                                onTap: () => _launchURL('https://apps.apple.com/us/app/heresy-challenges/id6748090992'),
-                                child: Image.asset('assets/Appstore.png', height: 44),
-                              ),
-                              SizedBox(width: 8),
-                              GestureDetector(
-                                onTap: () => _launchURL('https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME'),
-                                child: Image.asset('assets/Playstore.png', height: 44),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Image.asset(
+                      'assets/HUColorsTRANSBGPNG.png',
+                      height: 150,
+                    ),
                   ),
-                  // CENTERED BANNER
-                  Positioned(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxHeight: 140),
+                  Flexible(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.center,
                       child: Image.asset(
                         'assets/FullscreenFullNameTransparentPNG.png',
-                        fit: BoxFit.contain,
+                        height: 150,
                       ),
+                    ),
+                  ),
+                  //This is for the app bar section on the top right
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Home of the Heresy Challenges App',
+                          style: TextStyle(fontSize: 16, color: Colors.white70),
+                        ),
+                        SizedBox(height: 6),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset('assets/HCIcon512PNG.png', height: 40),
+                            SizedBox(width: 12),
+                            GestureDetector(
+                              onTap: () => _launchURL(
+                                'https://apps.apple.com/us/app/heresy-challenges/id6748090992',
+                              ),
+                              child: Image.asset(
+                                'assets/Appstore.png',
+                                height: 44,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            GestureDetector(
+                              onTap: () => _launchURL(
+                                'https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME',
+                              ),
+                              child: Image.asset(
+                                'assets/Playstore.png',
+                                height: 44,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -205,25 +213,7 @@ class _PlaceholderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        '$title Coming Soon',
-        style: TextStyle(fontSize: 22),
-      ),
+      child: Text('$title Coming Soon', style: TextStyle(fontSize: 22)),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

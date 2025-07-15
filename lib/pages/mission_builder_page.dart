@@ -14,7 +14,10 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
   final ScrollController _mainScrollController = ScrollController();
 
   final List<String> deploymentZones = ['DZ Alpha', 'DZ Bravo', 'DZ Charlie'];
-  final List<String> secondaryObjectives = ['Hold the Center', 'Wipe the Elite'];
+  final List<String> secondaryObjectives = [
+    'Hold the Center',
+    'Wipe the Elite',
+  ];
   final List<String> variables = ['Night Fight', 'Radiation Storm'];
 
   List<Map<String, dynamic>> primaryObjectives = [];
@@ -56,12 +59,7 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mission Builder'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {},
-          ),
-        ],
+        actions: [IconButton(icon: Icon(Icons.person), onPressed: () {})],
       ),
       body: Row(
         children: [
@@ -76,9 +74,15 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildStringModulePicker('Deployment Zones', deploymentZones),
+                    _buildStringModulePicker(
+                      'Deployment Zones',
+                      deploymentZones,
+                    ),
                     _buildPrimaryObjectivesPicker(),
-                    _buildStringModulePicker('Secondary Objectives', secondaryObjectives),
+                    _buildStringModulePicker(
+                      'Secondary Objectives',
+                      secondaryObjectives,
+                    ),
                     _buildStringModulePicker('Variables', variables),
                   ],
                 ),
@@ -115,14 +119,20 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
                     _buildPrimaryObjectivesDropZone(
                       title: 'Primary Objective',
                       items: selectedPrimaryObjectives,
-                      onReorder: (oldIndex, newIndex) =>
-                          _reorderMap(selectedPrimaryObjectives, oldIndex, newIndex),
+                      onReorder: (oldIndex, newIndex) => _reorderMap(
+                        selectedPrimaryObjectives,
+                        oldIndex,
+                        newIndex,
+                      ),
                     ),
                     _buildStringDropZone(
                       title: 'Secondary Objectives',
                       items: selectedSecondaryObjectives,
-                      onReorder: (oldIndex, newIndex) =>
-                          _reorder(selectedSecondaryObjectives, oldIndex, newIndex),
+                      onReorder: (oldIndex, newIndex) => _reorder(
+                        selectedSecondaryObjectives,
+                        oldIndex,
+                        newIndex,
+                      ),
                     ),
                     _buildStringDropZone(
                       title: 'Variables',
@@ -149,7 +159,10 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
         children: [
           Padding(
             padding: EdgeInsets.all(8),
-            child: Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             height: 120,
@@ -199,7 +212,10 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
         children: [
           Padding(
             padding: EdgeInsets.all(8),
-            child: Text("Primary Objectives", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            child: Text(
+              "Primary Objectives",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             height: 120,
@@ -259,7 +275,18 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text('VP: ${item['victoryPoints'] ?? ''}'),
-                )
+                ),
+                //If this item is selected, we add the Delete icon gesturedetector
+                if(selectedPrimaryObjectives.contains(item))
+                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        primaryObjectives.add(item);
+                        selectedPrimaryObjectives.remove(item);
+                      });
+                    },
+                    child: const Icon(Icons.delete),
+                  ),
               ],
             ),
             if (item['body'] != null) ...[
@@ -276,7 +303,7 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
                   color: Colors.grey[400],
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),
@@ -285,10 +312,7 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
 
   Widget _buildDraggableCard(String text) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(text),
-      ),
+      child: Padding(padding: const EdgeInsets.all(8.0), child: Text(text)),
     );
   }
 
@@ -315,6 +339,11 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
     );
   }
 
+  // List<Map<String, dynamic>> primaryObjectives = [];
+  // bool isLoadingPrimaryObjectives = true;
+
+  // List<String> selectedDeploymentZones = [];
+  // List<Map<String, dynamic>> selectedPrimaryObjectives = [];
   Widget _buildPrimaryObjectivesDropZone({
     required String title,
     required List<Map<String, dynamic>> items,
@@ -324,6 +353,7 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
       onWillAccept: (_) => true,
       onAccept: (data) {
         setState(() {
+          primaryObjectives.remove(data);
           items.add(data);
         });
       },
@@ -354,7 +384,10 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(
+                title,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8),
               Expanded(
                 child: DragAndDropLists(
@@ -370,13 +403,14 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
                             ),
                           )
                           .toList(),
-                    )
+                    ),
                   ],
-                  onItemReorder: (oldItemIndex, oldListIndex, newItemIndex, newListIndex) {
-                    if (oldListIndex == 0 && newListIndex == 0) {
-                      onReorder(oldItemIndex, newItemIndex);
-                    }
-                  },
+                  onItemReorder:
+                      (oldItemIndex, oldListIndex, newItemIndex, newListIndex) {
+                        if (oldListIndex == 0 && newListIndex == 0) {
+                          onReorder(oldItemIndex, newItemIndex);
+                        }
+                      },
                   onListReorder: (_, __) {},
                   axis: Axis.vertical,
                   listPadding: EdgeInsets.zero,
@@ -399,17 +433,14 @@ class _MissionBuilderPageState extends State<MissionBuilderPage> {
     });
   }
 
-  void _reorderMap(List<Map<String, dynamic>> list, int oldIndex, int newIndex) {
+  void _reorderMap(
+    List<Map<String, dynamic>> list,
+    int oldIndex,
+    int newIndex,
+  ) {
     setState(() {
       final item = list.removeAt(oldIndex);
       list.insert(newIndex, item);
     });
   }
 }
-
-
-
-
-
-
-

@@ -81,15 +81,17 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Image.asset(
-                      'assets/HUColorsTRANSBGPNG.png',
-                      height: 150,
+                  Flexible(
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        'assets/HUColorsTRANSBGPNG.png',
+                        height: 150,
+                      ),
                     ),
                   ),
                   Flexible(
-                    flex: 2,
+                    flex: 5,
                     child: Align(
                       alignment: Alignment.center,
                       child: Image.asset(
